@@ -1,13 +1,13 @@
-import { UserResolvers } from "./users";
+import { AllMutation } from "./Mutation";
 import { Resolvers } from "../../generated/graphql";
-import { PostResolvers } from "./posts";
+import { AllQuery } from "./Query";
 
 const resolvers: Resolvers = {
   Query: {
-    ...PostResolvers.Query
+    ...AllQuery.Query
   },
   Mutation: {
-    ...UserResolvers.Mutation
+    ...AllMutation.Mutation
   }
 };
 

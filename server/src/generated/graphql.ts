@@ -30,6 +30,8 @@ export type Mutation = {
   __typename?: "Mutation";
   register: User;
   login: User;
+  createPost: Post;
+  deletePost?: Maybe<Scalars["String"]>;
 };
 
 export type MutationRegisterArgs = {
@@ -39,6 +41,14 @@ export type MutationRegisterArgs = {
 export type MutationLoginArgs = {
   username: Scalars["String"];
   password: Scalars["String"];
+};
+
+export type MutationCreatePostArgs = {
+  body: Scalars["String"];
+};
+
+export type MutationDeletePostArgs = {
+  postID: Scalars["ID"];
 };
 
 export type Post = {
@@ -52,6 +62,12 @@ export type Post = {
 export type Query = {
   __typename?: "Query";
   getPosts?: Maybe<Array<Maybe<Post>>>;
+  getPost?: Maybe<Post>;
+  getUsers?: Maybe<Array<Maybe<User>>>;
+};
+
+export type QueryGetPostArgs = {
+  postID: Scalars["ID"];
 };
 
 export type RegisterInput = {
@@ -143,9 +159,9 @@ export type ResolversTypes = {
   Post: Post;
   ID: Scalars["ID"];
   String: Scalars["String"];
+  User: User;
   Mutation: {};
   RegisterInput: RegisterInput;
-  User: User;
   Boolean: Scalars["Boolean"];
   CacheControlScope: CacheControlScope;
   Upload: Scalars["Upload"];
@@ -244,6 +260,18 @@ export type MutationResolvers<
     ContextType,
     MutationLoginArgs
   >;
+  createPost?: Resolver<
+    ResolversTypes["Post"],
+    ParentType,
+    ContextType,
+    MutationCreatePostArgs
+  >;
+  deletePost?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType,
+    MutationDeletePostArgs
+  >;
 };
 
 export type PostResolvers<
@@ -262,6 +290,17 @@ export type QueryResolvers<
 > = {
   getPosts?: Resolver<
     Maybe<Array<Maybe<ResolversTypes["Post"]>>>,
+    ParentType,
+    ContextType
+  >;
+  getPost?: Resolver<
+    Maybe<ResolversTypes["Post"]>,
+    ParentType,
+    ContextType,
+    QueryGetPostArgs
+  >;
+  getUsers?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes["User"]>>>,
     ParentType,
     ContextType
   >;
