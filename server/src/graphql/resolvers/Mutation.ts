@@ -28,7 +28,6 @@ const MutationResolver: MutationResolvers = {
     const user: any = await User.findOne({ username });
 
     if (!user) {
-      // @ts-ignore
       errors.general = "User not found";
       throw new UserInputError("User not found", { errors });
     }
