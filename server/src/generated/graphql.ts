@@ -32,7 +32,7 @@ export type Mutation = {
 };
 
 export type MutationRegisterArgs = {
-  register?: Maybe<RegisterInput>;
+  registerInput?: Maybe<RegisterInput>;
 };
 
 export type Post = {
