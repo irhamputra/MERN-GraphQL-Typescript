@@ -1,0 +1,227 @@
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+export type Maybe<T> = T | null;
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string,
+  String: string,
+  Boolean: boolean,
+  Int: number,
+  Float: number,
+  /** The `Upload` scalar type represents a file upload. */
+  Upload: any,
+};
+
+
+
+
+
+
+
+
+
+
+export type AdditionalEntityFields = {
+  path?: Maybe<Scalars['String']>,
+  type?: Maybe<Scalars['String']>,
+};
+
+export enum CacheControlScope {
+  Public = 'PUBLIC',
+  Private = 'PRIVATE'
+}
+
+export type Mutation = {
+  __typename?: 'Mutation',
+  register: User,
+};
+
+
+export type MutationRegisterArgs = {
+  register?: Maybe<RegisterInput>
+};
+
+export type Post = {
+  __typename?: 'Post',
+  id: Scalars['ID'],
+  body: Scalars['String'],
+  createdAt: Scalars['String'],
+  username: Scalars['String'],
+};
+
+export type Query = {
+  __typename?: 'Query',
+  getPosts?: Maybe<Array<Maybe<Post>>>,
+};
+
+export type RegisterInput = {
+  username: Scalars['String'],
+  password: Scalars['String'],
+  confirmPassword: Scalars['String'],
+  email: Scalars['String'],
+};
+
+
+export type User = {
+  __typename?: 'User',
+  id: Scalars['ID'],
+  email: Scalars['String'],
+  token: Scalars['String'],
+  username: Scalars['String'],
+  createdAt: Scalars['String'],
+};
+
+
+export type ResolverFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Promise<TResult> | TResult;
+
+
+export type StitchingResolver<TResult, TParent, TContext, TArgs> = {
+  fragment: string;
+  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
+  | ResolverFn<TResult, TParent, TContext, TArgs>
+  | StitchingResolver<TResult, TParent, TContext, TArgs>;
+
+export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+
+export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs>;
+  resolve?: SubscriptionResolveFn<TResult, TParent, TContext, TArgs>;
+}
+
+export type SubscriptionResolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
+  | ((...args: any[]) => SubscriptionResolverObject<TResult, TParent, TContext, TArgs>)
+  | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
+
+export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
+  parent: TParent,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Maybe<TTypes>;
+
+export type NextResolverFn<T> = () => Promise<T>;
+
+export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+  next: NextResolverFn<TResult>,
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+/** Mapping between all available schema types and the resolvers types */
+export type ResolversTypes = {
+  Query: {},
+  Post: Post,
+  ID: Scalars['ID'],
+  String: Scalars['String'],
+  Mutation: {},
+  RegisterInput: RegisterInput,
+  User: User,
+  Boolean: Scalars['Boolean'],
+  CacheControlScope: CacheControlScope,
+  Upload: Scalars['Upload'],
+  AdditionalEntityFields: AdditionalEntityFields,
+  Int: Scalars['Int'],
+};
+
+export type CacheControlDirectiveResolver<Result, Parent, ContextType = any, Args = {   maxAge?: Maybe<Maybe<Scalars['Int']>>,
+  scope?: Maybe<Maybe<CacheControlScope>> }> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type UnionDirectiveResolver<Result, Parent, ContextType = any, Args = {   discriminatorField?: Maybe<Maybe<Scalars['String']>>,
+  additionalFields?: Maybe<Maybe<Array<Maybe<AdditionalEntityFields>>>> }> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type AbstractEntityDirectiveResolver<Result, Parent, ContextType = any, Args = {   discriminatorField?: Maybe<Scalars['String']>,
+  additionalFields?: Maybe<Maybe<Array<Maybe<AdditionalEntityFields>>>> }> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type EntityDirectiveResolver<Result, Parent, ContextType = any, Args = {   embedded?: Maybe<Maybe<Scalars['Boolean']>>,
+  additionalFields?: Maybe<Maybe<Array<Maybe<AdditionalEntityFields>>>> }> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type ColumnDirectiveResolver<Result, Parent, ContextType = any, Args = {   overrideType?: Maybe<Maybe<Scalars['String']>> }> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type IdDirectiveResolver<Result, Parent, ContextType = any, Args = {  }> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type LinkDirectiveResolver<Result, Parent, ContextType = any, Args = {   overrideType?: Maybe<Maybe<Scalars['String']>> }> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type EmbeddedDirectiveResolver<Result, Parent, ContextType = any, Args = {  }> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type MapDirectiveResolver<Result, Parent, ContextType = any, Args = {   path?: Maybe<Scalars['String']> }> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type MutationResolvers<ContextType = any, ParentType = ResolversTypes['Mutation']> = {
+  register?: Resolver<ResolversTypes['User'], ParentType, ContextType, MutationRegisterArgs>,
+};
+
+export type PostResolvers<ContextType = any, ParentType = ResolversTypes['Post']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  body?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+};
+
+export type QueryResolvers<ContextType = any, ParentType = ResolversTypes['Query']> = {
+  getPosts?: Resolver<Maybe<Array<Maybe<ResolversTypes['Post']>>>, ParentType, ContextType>,
+};
+
+export interface UploadScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Upload'], any> {
+  name: 'Upload'
+}
+
+export type UserResolvers<ContextType = any, ParentType = ResolversTypes['User']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  username?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  createdAt?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+};
+
+export type Resolvers<ContextType = any> = {
+  Mutation?: MutationResolvers<ContextType>,
+  Post?: PostResolvers<ContextType>,
+  Query?: QueryResolvers<ContextType>,
+  Upload?: GraphQLScalarType,
+  User?: UserResolvers<ContextType>,
+};
+
+
+/**
+ * @deprecated
+ * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
+*/
+export type IResolvers<ContextType = any> = Resolvers<ContextType>;
+export type DirectiveResolvers<ContextType = any> = {
+  cacheControl?: CacheControlDirectiveResolver<any, any, ContextType>,
+  union?: UnionDirectiveResolver<any, any, ContextType>,
+  abstractEntity?: AbstractEntityDirectiveResolver<any, any, ContextType>,
+  entity?: EntityDirectiveResolver<any, any, ContextType>,
+  column?: ColumnDirectiveResolver<any, any, ContextType>,
+  id?: IdDirectiveResolver<any, any, ContextType>,
+  link?: LinkDirectiveResolver<any, any, ContextType>,
+  embedded?: EmbeddedDirectiveResolver<any, any, ContextType>,
+  map?: MapDirectiveResolver<any, any, ContextType>,
+};
+
+
+/**
+* @deprecated
+* Use "DirectiveResolvers" root object instead. If you wish to get "IDirectiveResolvers", add "typesPrefix: I" to your config.
+*/
+export type IDirectiveResolvers<ContextType = any> = DirectiveResolvers<ContextType>;import { ObjectID } from 'mongodb';
