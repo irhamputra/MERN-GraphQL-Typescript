@@ -31,23 +31,22 @@ export const ValidatorRegisterInput = (
   }
 
   // @ts-ignore
-  return { errors, valid: Object.keys(errors) < 1};
+  return { errors, valid: Object.keys(errors) < 1 };
 };
 
-
 export const ValidatorLoginInput = (username: string, password: string) => {
-    const errors = {};
+  const errors = {};
 
-    if (username.trim() === "") {
-        // @ts-ignore
-        errors.username = "Username must not be empty";
-    }
-
-    if (password.trim() === "") {
-        // @ts-ignore
-        errors.password = "Password must not be empty";
-    }
-
+  if (username.trim() === "") {
     // @ts-ignore
-    return { errors, valid: Object.keys(errors) < 1};
+    errors.username = "Username must not be empty";
+  }
+
+  if (password.trim() === "") {
+    // @ts-ignore
+    errors.password = "Password must not be empty";
+  }
+
+  // @ts-ignore
+  return { errors, valid: Object.keys(errors) < 1 };
 };

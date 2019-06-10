@@ -1,7 +1,8 @@
-import { PostResolvers } from "./posts";
 import { UserResolvers } from "./users";
+import { Resolvers } from "../../generated/graphql";
+import { PostResolvers } from "./posts";
 
-const resolvers = {
+const resolvers: Resolvers = {
   Query: {
     ...PostResolvers.Query
   },

@@ -29,10 +29,16 @@ export enum CacheControlScope {
 export type Mutation = {
   __typename?: "Mutation";
   register: User;
+  login: User;
 };
 
 export type MutationRegisterArgs = {
   registerInput?: Maybe<RegisterInput>;
+};
+
+export type MutationLoginArgs = {
+  username: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type Post = {
@@ -231,6 +237,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     MutationRegisterArgs
+  >;
+  login?: Resolver<
+    ResolversTypes["User"],
+    ParentType,
+    ContextType,
+    MutationLoginArgs
   >;
 };
 
