@@ -19,9 +19,9 @@ const Mutation: MutationResolvers = {
     root: any,
     { username, password }: MutationLoginArgs
   ): Promise<any> => {
-    const { errors } = ValidatorLoginInput(username, password);
+    const { errors }: any = ValidatorLoginInput(username, password);
 
-    const user = await User.findOne({ username });
+    const user: any = await User.findOne({ username });
 
     if (!user) {
       // @ts-ignore
@@ -29,29 +29,24 @@ const Mutation: MutationResolvers = {
       throw new UserInputError("User not found", { errors });
     }
 
-    // @ts-ignore
-    const match = await bcrypt.compare(password, user.password);
+    const match: any = await bcrypt.compare(password, user.password);
 
     if (!match) {
-      // @ts-ignore
       errors.general = "Wrong credentials";
       throw new UserInputError("Wrong credentials", { errors });
     }
 
     const token = jwt.sign(
-      // @ts-ignore
       { id: user.id, username: user.username, email: user.email },
       SECRET_KEY,
       { expiresIn: "24h" }
     );
 
-    // @ts-ignore
     return { ...user._doc, id: user._id, token };
   },
 
   register: async (root: any, args: MutationRegisterArgs): Promise<any> => {
-    // @ts-ignore
-    const { username, email, password, confirmPassword } = args.registerInput;
+    const { username, email, password, confirmPassword }: any = args.registerInput;
 
     const { valid, errors } = ValidatorRegisterInput(
       username,
@@ -81,16 +76,14 @@ const Mutation: MutationResolvers = {
       createdAt: new Date().toISOString()
     });
 
-    const res = await newUser.save();
+    const res: any = await newUser.save();
 
     const token = jwt.sign(
-      // @ts-ignore
       { id: res.id, username: res.username, email: res.email },
       SECRET_KEY,
       { expiresIn: "24h" }
     );
 
-    // @ts-ignore
     return { ...res._doc, id: res._id, token };
   }
 };
