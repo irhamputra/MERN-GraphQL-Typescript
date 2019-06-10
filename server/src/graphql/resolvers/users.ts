@@ -8,31 +8,38 @@ import {ValidatorLoginInput, ValidatorRegisterInput} from "../../utils/validator
 
 export const UserResolvers = {
   Mutation: {
+    // @ts-ignore
     login: async (_, { username, password }) => {
         const {valid, errors} = ValidatorLoginInput(username, password);
 
         const user = await User.findOne({ username });
 
         if (!user){
+            // @ts-ignore
             errors.general = 'User not found';
             throw new UserInputError('User not found', {errors})
         }
 
+        // @ts-ignore
         const match = await bcrypt.compare(password, user.password);
 
         if (!match){
+            // @ts-ignore
             errors.general = 'Wrong credentials';
             throw new UserInputError('Wrong credentials', {errors})
         }
 
         const token = jwt.sign(
+            // @ts-ignore
             { id: user.id, username: user.username, email: user.email },
             SECRET_KEY,
             { expiresIn: "24h" }
         );
 
+        // @ts-ignore
         return { ...user._doc, id: user._id, token };
     },
+    // @ts-ignore
     register: async (_, { registerInput: { username, email, password, confirmPassword } }) => {
       const { valid, errors } = ValidatorRegisterInput(
         username,
@@ -65,11 +72,13 @@ export const UserResolvers = {
       const res = await newUser.save();
 
       const token = jwt.sign(
+        // @ts-ignore
         { id: res.id, username: res.username, email: res.email },
         SECRET_KEY,
         { expiresIn: "24h" }
       );
 
+      // @ts-ignore
       return { ...res._doc, id: res._id, token };
     }
   }
