@@ -1,7 +1,6 @@
 import { UserInputError } from "apollo-server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
 import { User } from "../../models/User";
 import { SECRET_KEY } from "../../config";
 import {
@@ -46,7 +45,12 @@ const Mutation: MutationResolvers = {
   },
 
   register: async (root: any, args: MutationRegisterArgs): Promise<any> => {
-    const { username, email, password, confirmPassword }: any = args.registerInput;
+    const {
+      username,
+      email,
+      password,
+      confirmPassword
+    }: any = args.registerInput;
 
     const { valid, errors } = ValidatorRegisterInput(
       username,
