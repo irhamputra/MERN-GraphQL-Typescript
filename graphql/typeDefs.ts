@@ -24,7 +24,7 @@ const typeDefs = gql`
         getPosts: [Post]
     }
     type Mutation {
-        register(register: RegisterInput): User!
+        register(registerInput: RegisterInput): User!
     }
 `;
 

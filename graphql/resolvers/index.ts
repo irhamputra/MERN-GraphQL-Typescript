@@ -1,10 +1,12 @@
 import { PostResolvers } from "./posts";
+import {UserResolvers} from "./users";
 
 const resolvers = {
   Query: {
-    ...PostResolvers.Query
+    ...PostResolvers.getPosts
   },
   Mutation: {
+    ...UserResolvers.register
   }
 };
 
