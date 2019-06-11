@@ -1,6 +1,6 @@
 import { AllMutation } from "./Mutation";
-import { Resolvers } from "../../generated/graphql";
 import { AllQuery } from "./Query";
+import { Resolvers } from "../../generated/graphql";
 
 const resolvers: Resolvers = {
   Query: {

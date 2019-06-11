@@ -1,6 +1,6 @@
 import { Post } from "../../models/Post";
-import { QueryGetPostArgs, QueryResolvers } from "../../generated/graphql";
 import { User } from "../../models/User";
+import { QueryGetPostArgs, QueryResolvers } from "../../generated/graphql";
 
 const QueryResolver: QueryResolvers = {
   getUsers: async (): Promise<any> => {
@@ -17,9 +17,9 @@ const QueryResolver: QueryResolvers = {
       throw new Error("Error");
     }
   },
-  getPost: async (root: any, args: QueryGetPostArgs): Promise<any> => {
+  getPost: async (root, { postID }: QueryGetPostArgs): Promise<any> => {
     try {
-      const post = await Post.findById(args.postID);
+      const post = await Post.findById(postID);
 
       if (!post) throw new Error("Post not found");
 
