@@ -26,12 +26,28 @@ export enum CacheControlScope {
   Private = "PRIVATE"
 }
 
+export type Comment = {
+  __typename?: "Comment";
+  id: Scalars["ID"];
+  createdAt: Scalars["String"];
+  username: Scalars["String"];
+  body: Scalars["String"];
+};
+
+export type Like = {
+  __typename?: "Like";
+  id: Scalars["ID"];
+  createdAt: Scalars["String"];
+  username: Scalars["String"];
+};
+
 export type Mutation = {
   __typename?: "Mutation";
   register: User;
   login: User;
   createPost: Post;
   deletePost?: Maybe<Scalars["String"]>;
+  createdComment: Post;
 };
 
 export type MutationRegisterArgs = {
@@ -51,12 +67,19 @@ export type MutationDeletePostArgs = {
   postID: Scalars["ID"];
 };
 
+export type MutationCreatedCommentArgs = {
+  postID: Scalars["ID"];
+  body: Scalars["String"];
+};
+
 export type Post = {
   __typename?: "Post";
   id: Scalars["ID"];
   body: Scalars["String"];
   createdAt: Scalars["String"];
   username: Scalars["String"];
+  comments: Array<Maybe<Comment>>;
+  likes: Array<Maybe<Like>>;
 };
 
 export type Query = {
@@ -159,6 +182,8 @@ export type ResolversTypes = {
   Post: Post;
   ID: Scalars["ID"];
   String: Scalars["String"];
+  Comment: Comment;
+  Like: Like;
   User: User;
   Mutation: {};
   RegisterInput: RegisterInput;
@@ -244,6 +269,25 @@ export type MapDirectiveResolver<
   Args = { path?: Maybe<Scalars["String"]> }
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
+export type CommentResolvers<
+  ContextType = any,
+  ParentType = ResolversTypes["Comment"]
+> = {
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  username?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  body?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+};
+
+export type LikeResolvers<
+  ContextType = any,
+  ParentType = ResolversTypes["Like"]
+> = {
+  id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  username?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+};
+
 export type MutationResolvers<
   ContextType = any,
   ParentType = ResolversTypes["Mutation"]
@@ -272,6 +316,12 @@ export type MutationResolvers<
     ContextType,
     MutationDeletePostArgs
   >;
+  createdComment?: Resolver<
+    ResolversTypes["Post"],
+    ParentType,
+    ContextType,
+    MutationCreatedCommentArgs
+  >;
 };
 
 export type PostResolvers<
@@ -282,6 +332,16 @@ export type PostResolvers<
   body?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   username?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  comments?: Resolver<
+    Array<Maybe<ResolversTypes["Comment"]>>,
+    ParentType,
+    ContextType
+  >;
+  likes?: Resolver<
+    Array<Maybe<ResolversTypes["Like"]>>,
+    ParentType,
+    ContextType
+  >;
 };
 
 export type QueryResolvers<
@@ -323,6 +383,8 @@ export type UserResolvers<
 };
 
 export type Resolvers<ContextType = any> = {
+  Comment?: CommentResolvers<ContextType>;
+  Like?: LikeResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Post?: PostResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
